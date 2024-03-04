@@ -18,14 +18,6 @@ spec:
       default: 'NA'
       description: Image registry url.
       optional: true
-    - name: CURRENT_GIT_TAG
-      type: string
-      default: ''
-      description: Current version of the application/image in dev.
-    - name: REPO_NAME
-      type: string
-      description: Name of the repository
-      default: 'NA'
   workspaces:
     - name: source
   steps:
@@ -41,9 +33,7 @@ spec:
               optional: true
       script: |
         if [ $(params.IMAGE_REGISTRY) != "NA" ]; then
-          trivy image $(params.IMAGE_REGISTRY)/$(params.REPO_NAME):$(params.CURRENT_GIT_TAG)
+          trivy image $(params.IMAGE_REGISTRY)/$(params.IMAGE_NAME)
         else
-          trivy image ${IMAGE_REGISTRY}/$(params.REPO_NAME):$(params.CURRENT_GIT_TAG)
+          trivy image ${IMAGE_REGISTRY}/$(params.IMAGE_NAME)
         fi        
-
-        
