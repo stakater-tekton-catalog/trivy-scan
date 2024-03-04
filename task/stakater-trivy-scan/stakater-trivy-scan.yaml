@@ -5,23 +5,37 @@ kind: Task
 metadata:
   name: stakater-trivy-scan
   labels:
-    app.kubernetes.io/version: "0.0.3"
+    app.kubernetes.io/version: "0.0.4"
 spec:
   params:
     - description: Reference of the image buildah will produce.
-      name: IMAGE
+      name: IMAGE_NAME
       type: string
     - default: 'true'
       description: Flag specifying whether image should be built again.
       name: BUILD_IMAGE
       type: string
+    - name: IMAGE_REGISTRY
+      type: string
+      default: 'NA'
+      description: Image registry url.
+      optional: true
   workspaces:
     - name: source
   steps:
     - name: scan
       image: aquasec/trivy
       workingDir: $(workspaces.source.path)
+      env:
+        - name: IMAGE_REGISTRY
+          valueFrom:
+            secretKeyRef:
+              name: docker-reg-creds
+              key: url
+              optional: true
       script: |
-        if [[ $(params.BUILD_IMAGE) == true ]]; then
-          trivy image $(params.IMAGE)
+        if [ $(params.IMAGE_REGISTRY) != "NA" ]; then
+          trivy image $(params.IMAGE_REGISTRY)/$(params.IMAGE_NAME)
+        else
+          trivy image ${IMAGE_REGISTRY}/$(params.IMAGE_NAME)
         fi
