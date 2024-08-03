@@ -6,17 +6,13 @@ metadata:
     app.kubernetes.io/version: "{{ .Chart.Version }}"
 spec:
   params:
-    - description: Reference of the image buildah will produce.
-      name: IMAGE_NAME
-      type: string
-    - default: 'true'
-      description: Flag specifying whether image should be built again.
-      name: BUILD_IMAGE
+    - name: IMAGE_NAME
+      description: Reference of the image buildah will produce.
       type: string
     - name: IMAGE_REGISTRY
+      description: Image registry url.
       type: string
       default: 'NA'
-      description: Image registry url.
       optional: true
   workspaces:
     - name: source
