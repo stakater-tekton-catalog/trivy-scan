@@ -17,4 +17,4 @@ jobs:
       CONTAINER_REGISTRY_URL: ghcr.io/stakater
       CONTAINER_REGISTRY_USERNAME: ${{ secrets.GHCR_USERNAME }}
       CONTAINER_REGISTRY_PASSWORD: ${{ secrets.GHCR_TOKEN }}
-      GH_TOKEN: ${{ secrets.GHCR_TOKEN }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
