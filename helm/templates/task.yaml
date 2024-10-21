@@ -33,4 +33,3 @@ spec:
         else
           trivy image ${IMAGE_REGISTRY}/$(params.IMAGE_NAME)
         fi        
-
