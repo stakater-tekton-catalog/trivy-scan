@@ -26,7 +26,7 @@ spec:
         - name: IMAGE_REGISTRY
           valueFrom:
             secretKeyRef:
-              name: docker-proxy-reg-creds
+              name: docker-reg-creds
               key: url
               optional: true
       script: |
