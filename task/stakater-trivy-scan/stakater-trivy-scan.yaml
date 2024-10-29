@@ -29,9 +29,15 @@ spec:
               name: docker-reg-creds
               key: url
               optional: true
+        - name: TRIVY_DB_PROXY_REPO
+          valueFrom:
+            secretKeyRef:
+              name: docker-reg-creds
+              key: proxyUrl
+              optional: true
       script: |
         if [ $(params.IMAGE_REGISTRY) != "NA" ]; then
-          trivy image --db-repository public.ecr.aws/aquasecurity/trivy-db:2 $(params.IMAGE_REGISTRY)/$(params.IMAGE_NAME)
+          trivy image --db-repository ${TRIVY_DB_PROXY_REPO} $(params.IMAGE_REGISTRY)/$(params.IMAGE_NAME)
         else
-          trivy image --db-repository public.ecr.aws/aquasecurity/trivy-db:2 ${IMAGE_REGISTRY}/$(params.IMAGE_NAME)
+          trivy image --db-repository ${TRIVY_DB_PROXY_REPO} ${IMAGE_REGISTRY}/$(params.IMAGE_NAME)
         fi
