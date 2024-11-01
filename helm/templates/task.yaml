@@ -29,8 +29,7 @@ spec:
               optional: true
       script: |
         if [ $(params.IMAGE_REGISTRY) != "NA" ]; then
-          trivy image $(params.IMAGE_REGISTRY)/$(params.IMAGE_NAME)
+          trivy image --db-repository public.ecr.aws/aquasecurity/trivy-db:2 $(params.IMAGE_REGISTRY)/$(params.IMAGE_NAME)
         else
           trivy image ${IMAGE_REGISTRY}/$(params.IMAGE_NAME)
         fi        
-
